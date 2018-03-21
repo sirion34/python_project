@@ -40,20 +40,32 @@ class Player():
             self.images.append(i)
 
 
+    def block_check(self):
+        self.blocked = [0, 0, 0, 0]
+        for i in self.game.mobs:
+            self.contact_check(i)
+        if self.x <= 0:
+            self.blocked[LEFT] = 1
+        if self.y <= 0:
+            self.blocked[UP] = 1
+        if self.x >= SCREEN_WIDTH - 60:
+            self.blocked[RIGHT] = 1
+        if self.y >= SCREEN_HEIGHT - 64:
+            self.blocked[DOWN] = 1
 
     def moove(self):
         #само передвижение(movement itself)
-        # self.block_check()
-        if self.mooving[RIGHT] == 1:# and self.blocked[RIGHT] == 0:
+        self.block_check()
+        if self.mooving[RIGHT] == 1 and self.blocked[RIGHT] == 0:
             self.direction = RIGHT
             self.x += PLAYER_SPEED
-        if self.mooving[DOWN] == 1: #and self.blocked[DOWN] == 0:
+        if self.mooving[DOWN] == 1 and self.blocked[DOWN] == 0:
             self.direction = DOWN
             self.y += PLAYER_SPEED
-        if self.mooving[LEFT] == 1: #and self.blocked[LEFT] == 0:
+        if self.mooving[LEFT] == 1 and self.blocked[LEFT] == 0:
             self.direction = LEFT
             self.x -= PLAYER_SPEED
-        if self.mooving[UP] == 1: #and self.blocked[UP] == 0:
+        if self.mooving[UP] == 1 and self.blocked[UP] == 0:
             self.direction = UP
             self.y -= PLAYER_SPEED
 
@@ -69,30 +81,19 @@ class Player():
 
     #crashing with object
 
-    # def block_check(self):
-    #     self.blocked = [0, 0, 0, 0]
-    #     for i in self.game.mobs:
-    #         self.contact_check(i)
-    #     if self.x <= 0:
-    #         self.blocked[LEFT] = 1
-    #     if self.y <= 0:
-    #         self.blocked[UP] = 1
-    #     if self.x >= SCREEN_WIDTH - 60:
-    #         self.blocked[RIGHT] = 1
-    #     if self.y >= SCREEN_HEIGHT - 64:
-    #         self.blocked[DOWN] = 1
-    #
-    # # crashing with mobs
-    #
-    # def contact_check(self,obj):
-    #     if self.x >= obj.x - self.size and self.y <= obj.y + obj.size - 15 and self.y >= obj.y - obj.size + 15 and self.x <= obj.x + obj.size/2:
-    #         self.blocked[RIGHT] = 1
-    #     if self.x <= obj.x + obj.size and self.y <= obj.y + obj.size - 15 and self.y >= obj.y - obj.size + 15 and self.x >= obj.x:
-    #         self.blocked[LEFT] = 1
-    #     if self.y >= obj.y - self.size and self.x <= obj.x + obj.size - 15 and self.x >= obj.x - obj.size + 15 and self.x <= obj.y + obj.size/2:
-    #         self.blocked[DOWN] = 1
-    #     if self.y <= obj.y + obj.size and self.x <= obj.x + obj.size - 15 and self.x >= obj.x - obj.size + 15 and self.x >= obj.y:
-    #         self.blocked[UP] = 1
+
+
+    # crashing with mobs
+    #Типа формулы с непроходимостью к мобу
+    def contact_check(self,obj):
+        if self.x >= obj.x - obj.size and self.y <= obj.y + obj.size-SIZE_DIF and self.y >= obj.y - obj.size+SIZE_DIF and self.x <= obj.x + SIZE_DIF and obj.state != DEAD:
+            self.blocked[RIGHT] = 1
+        if self.x <= obj.x + obj.size + SIZE_DIF and self.y <= obj.y + obj.size-SIZE_DIF and self.y >= obj.y - obj.size+SIZE_DIF and self.x >= obj.x + obj.size - SIZE_DIF and obj.state != DEAD:
+            self.blocked[LEFT] = 1
+        if self.y >= obj.y - self.size and self.x <= obj.x + obj.size-SIZE_DIF and self.x >= obj.x - obj.size+SIZE_DIF and self.y <= obj.y + SIZE_DIF and obj.state != DEAD:
+            self.blocked[DOWN] = 1
+        if self.y <= obj.y + obj.size + SIZE_DIF and self.x <= obj.x + obj.size-SIZE_DIF and self.x >= obj.x - obj.size+SIZE_DIF and self.y >= obj.y + obj.size - SIZE_DIF and obj.state != DEAD:
+            self.blocked[UP] = 1
 
     def render(self,screen):
         screen.blit(self.images[self.direction][self.state], (self.x,self.y))

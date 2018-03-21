@@ -46,19 +46,6 @@ class Main():
                         self.player.state = ALIVE
                 if event.key == K_z:
                     self.player.shoot_z()
-                    # if self.player.mp >= SKILL1_COST and self.player.state != SHOOT:
-                    #     self.player.mp -= SKILL1_COST
-                    #     self.player.state = SHOOT
-                    #     self.player.spell_casted = pygame.time.get_ticks()
-                    #
-                    #     if self.player.direction == RIGHT:
-                    #         self.projective.append(Arrow(self.player.x + 12, self.player.y,self.player.direction))
-                    #     elif self.player.direction == DOWN:
-                    #         self.projective.append(Arrow(self.player.x, self.player.y + 12,self.player.direction))
-                    #     elif self.player.direction == LEFT:
-                    #         self.projective.append(Arrow(self.player.x - 12, self.player.y, self.player.direction))
-                    #     else:
-                    #         self.projective.append(Arrow(self.player.x, self.player.y - 12, self.player.direction))
 
 
             #при отжатии клавиши (when the key is released)
@@ -73,7 +60,7 @@ class Main():
                    self.player.mooving[LEFT] = 0
 
     def add_demon(self, x, y):
-        self.mobs.append(Demon(self, x, y, LEFT))
+        self.mobs.append(Demon(self, x, y, DOWN))
 
     def render(self):
 
@@ -96,10 +83,13 @@ class Main():
 
         #время регена (regen time)
         pygame.time.set_timer(USEREVENT + 1, 100)
+
         self.add_demon(300,250)
+
         #цикл для передвижениея персонажа (loop for character movement)
         while self.running == True:
             self.timer.tick(60)
+
             #прописываем, что если ГГ умер, то двигаться он не может (prescribe that if GG died, then he can not move)
             if self.player.state != DEAD:
                 self.player.moove()

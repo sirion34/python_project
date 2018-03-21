@@ -5,14 +5,11 @@ class Mob():
 
     def __init__(self, game, name, x_start, y_start, dir, image_pack):
         self.game = game
-
         self.state = ALIVE
         self.direction = dir
-        self.direction = LEFT
         self.x = x_start
         self.y = y_start
         self.size = 48
-        self.size = (64, 64)
         self.name = name
         self.hp = MAX_HP
         self.mp = MAX_MP
@@ -27,9 +24,8 @@ class Mob():
 
             #разбиение персонажа
             #первые две начало откуда будет вырезаться на картинке ГГ, вторые две цифры до скольки вырезаться
-            # character splitting
-            # the first two beginnings from where it will be cut out in the picture of YY,
-            # the second two digits before how many are cut out
+
+            ##22.03.2018: почему это ГГ????
 
             i.append(temp.subsurface(0, 0, 64, 64))
             #изображение для ГГ с натянутой тетивой(image for a GG with a stretched string)
@@ -45,5 +41,5 @@ class Demon(Mob):
     def __init__(self, game, x_start, y_start, dir):
         self.image_pack = ['data/demonr.png', 'data/demond.png', 'data/demonl.png', 'data/demonu.png']
         self.speed = 10
-        Mob.__init__(self, game, 'Demon', x_start, y_start, LEFT, self.image_pack)
+        Mob.__init__(self, game, 'Demon', x_start, y_start, UP, self.image_pack)
 

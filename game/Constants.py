@@ -1,6 +1,6 @@
 #высота и ширина окна
-SCREEN_WIDTH = 700
-SCREEN_HEIGHT = 700
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 500
 
 
 RIGHT = 0
@@ -25,6 +25,7 @@ HP_REG = 1
 MP_REG = 1
 #скорость игрока (player speed)
 PLAYER_SPEED = 5
-
+#стоимость выстрела
 SKILL1_COST = 20
-
+#что то с непроходимостью к мобу
+SIZE_DIF = 13
