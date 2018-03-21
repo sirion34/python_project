@@ -26,6 +26,9 @@ class Main():
             #эвент регена (regen event)
             elif event.type == USEREVENT + 1:
                 self.player.tick()
+            #эвент рандомного передвижения
+            elif event.type == USEREVENT + 2:
+                self.mobs[0].random_moove()
 
             #передвижение игрока (player movement)
             elif event.type == KEYDOWN:
@@ -83,8 +86,11 @@ class Main():
 
         #время регена (regen time)
         pygame.time.set_timer(USEREVENT + 1, 100)
-
+        pygame.time.set_timer(USEREVENT + 2, 2000)
         self.add_demon(300,250)
+
+
+
 
         #цикл для передвижениея персонажа (loop for character movement)
         while self.running == True:
@@ -94,6 +100,8 @@ class Main():
             if self.player.state != DEAD:
                 self.player.moove()
             for i in self.projective:
+                i.moove()
+            for i in self.mobs:
                 i.moove()
             print(self.projective)
             self.render()
