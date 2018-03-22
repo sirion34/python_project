@@ -24,8 +24,9 @@ MAX_MP = 100
 HP_REG = 1
 MP_REG = 1
 #скорость игрока (player speed)
-PLAYER_SPEED = 5
+PLAYER_SPEED = 6
 #стоимость выстрела
 SKILL1_COST = 20
 #что то с непроходимостью к мобу
-SIZE_DIF = 13
+SIZE_DIF = 4
+PLAYER_IMAGE_PACK = ['data/archerr.png','data/archerd.png','data/archerl.png','data/archeru.png']
