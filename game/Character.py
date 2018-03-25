@@ -15,6 +15,7 @@ class Character():
         self.name = name
         self.hp = MAX_HP
         self.mp = MAX_MP
+        self.sp = MAX_SP
         self.speed = speed
         self.blocked = [0, 0, 0, 0]
         self.mooving = [0, 0, 0, 0]
@@ -22,7 +23,9 @@ class Character():
         #(then, where do the right, bottom, left and top image of the character)
         self.image_pack = image_pack
         self.images = []
+        self.skill_list = []
         self.spell_casted = 0
+        self.previous_tick = 0
         for image in self.image_pack:
             temp = pygame.image.load(image).convert_alpha()
             i = []

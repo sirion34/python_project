@@ -9,8 +9,10 @@ from Character import *
 from Buttons import *
 
 class Main():
+
     def __init__(self, screen):
         self.screen = screen
+        self.camera = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.player = Player(self, 'SIRION')
         self.projective = []
         self.mobs = []
@@ -21,7 +23,7 @@ class Main():
         self.running = True
         self.buttons = []
 
-        self.buttons.append(Button_Add_Demon(150, 75, 'добавить ебучего дьявола', self))
+        self.buttons.append(Button_Add_Demon(SCREEN_HEIGHT + 200, 75, 'ДЬЯВАЛ АДДДД', self))
         self.main_loop()
 
 
@@ -30,7 +32,7 @@ class Main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 self.running = False
-
+                pygame.quit()
             #эвент регена (regen event)
             elif event.type == USEREVENT + 1:
                 self.player.tick()
@@ -56,7 +58,7 @@ class Main():
                     else:
                         self.player.state = ALIVE
                 if event.key == K_z:
-                    self.player.shoot_z()
+                    self.player.skill_list[0].click_check()
 
 
             #при отжатии клавиши (when the key is released)
@@ -97,18 +99,16 @@ class Main():
     def render(self):
 
         #прорисовка всего (drawing of the whole)
-        self.screen.blit(self.background,(0,0))
-        for i in self.corpses:
-            i.render(screen)
-        self.player.render(screen)
-        self.player.render_ui(screen)
-        for i in self.projective:
-            i.render(screen)
-        for i in self.mobs:
-            i.render(screen)
-        for i in self.buttons:
-            i.render(screen)
-        pygame.display.flip()
+        self.screen.blit(self.camera, (0, 0))
+        self.camera.blit(self.background, (0, 0))
+
+        [i.render(self.camera) for i in self.corpses]
+        self.player.render(self.camera)
+        self.player.render_ui(self.screen)
+        [i.render(self.camera) for i in self.mobs]
+        [i.render(self.camera) for i in self.projective]
+        [i.render(self.screen) for i in self.buttons]
+        pygame.display.update()
 
     def moove(self):
         # цикл для передвижениея персонажа, мобов, патронов, всего короче
@@ -139,5 +139,5 @@ class Main():
 
 
 pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+screen = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
 game = Main(screen)

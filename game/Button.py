@@ -4,6 +4,8 @@ CORNERSTINE = 'data/cornerstone.ttf'
 
 RED = (200, 30, 30)
 GREEN = (20, 200, 20)
+
+
 class Button():
     def __init__(self, x, y, button_text, font_style = CORNERSTINE, font_color = RED, font_size = 20, button_color = GREEN):
         self.x = x
